@@ -28,15 +28,36 @@ def speak(text):
 
 @st.cache_data
 def load_data():
-    # ĐÃ SỬA TÊN FILE CHUẨN XÁC VỚI GITHUB CỦA BẠN
     file_name = "N2_Flashcards.xlsx"
     if os.path.exists(file_name):
         df = pd.read_excel(file_name)
         return df.to_dict('records')
     return []
 
+# --- HÀM LƯU VÀ ĐỌC VỊ TRÍ (MỚI) ---
+def load_last_index():
+    try:
+        with open("last_index.txt", "r") as f:
+            return int(f.read().strip())
+    except:
+        return 0
+
+def save_index(index):
+    try:
+        with open("last_index.txt", "w") as f:
+            f.write(str(index))
+    except:
+        pass
+
 data = load_data()
-if 'index' not in st.session_state: st.session_state.index = 0
+
+# Khởi tạo vị trí từ file nhớ tạm
+if 'index' not in st.session_state: 
+    st.session_state.index = load_last_index()
+    # Chống lỗi nếu file Excel mới bị xóa bớt từ
+    if st.session_state.index >= len(data):
+        st.session_state.index = 0
+
 if 'flipped' not in st.session_state: st.session_state.flipped = False
 
 st.title("🇯🇵 JP Flashcard N2 Pro")
@@ -69,11 +90,13 @@ if data:
         if st.button("<< TRƯỚC"):
             st.session_state.index = (st.session_state.index - 1) % len(data)
             st.session_state.flipped = False
+            save_index(st.session_state.index) # Lưu lại vị trí
             st.rerun()
     with c2:
         if st.button("TIẾP THEO >>"):
             st.session_state.index = (st.session_state.index + 1) % len(data)
             st.session_state.flipped = False
+            save_index(st.session_state.index) # Lưu lại vị trí
             st.rerun()
     st.caption(f"Thẻ số: {st.session_state.index + 1} / {len(data)}")
 else:
