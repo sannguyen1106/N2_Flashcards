@@ -60,7 +60,7 @@ if 'index' not in st.session_state:
 
 if 'flipped' not in st.session_state: st.session_state.flipped = False
 
-st.title("🇯🇵 JP Flashcard N2 Pro")
+st.title("Flashcard N2")
 
 if data:
     current_card = data[st.session_state.index]
