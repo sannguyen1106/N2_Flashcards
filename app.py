@@ -4,7 +4,7 @@ import os
 from gtts import gTTS
 import base64
 
-st.set_page_config(page_title="Flashcard N2 Pro", layout="centered")
+st.set_page_config(page_title="JP Flashcard N2 Pro", layout="centered")
 
 st.markdown("""
     <style>
@@ -28,7 +28,7 @@ def speak(text):
 
 @st.cache_data
 def load_data():
-    # Khớp đúng tên file trên GitHub của bạn
+    # ĐÃ SỬA TÊN FILE CHUẨN XÁC VỚI GITHUB CỦA BẠN
     file_name = "N2_Flashcards.xlsx"
     if os.path.exists(file_name):
         df = pd.read_excel(file_name)
@@ -39,7 +39,7 @@ data = load_data()
 if 'index' not in st.session_state: st.session_state.index = 0
 if 'flipped' not in st.session_state: st.session_state.flipped = False
 
-st.title("🇯🇵 Flashcard N2 Pro")
+st.title("🇯🇵 JP Flashcard N2 Pro")
 
 if data:
     current_card = data[st.session_state.index]
@@ -75,5 +75,6 @@ if data:
             st.session_state.index = (st.session_state.index + 1) % len(data)
             st.session_state.flipped = False
             st.rerun()
+    st.caption(f"Thẻ số: {st.session_state.index + 1} / {len(data)}")
 else:
     st.error("Lỗi dữ liệu!")
