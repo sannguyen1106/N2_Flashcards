@@ -29,7 +29,7 @@ def speak(text):
 @st.cache_data
 def load_data():
     # Khớp đúng tên file trên GitHub của bạn
-    file_name = "N2_Flashcards_100_TheoChuDe_FullFurigana.xlsx"
+    file_name = "N2_Flashcards.xlsx"
     if os.path.exists(file_name):
         df = pd.read_excel(file_name)
         return df.to_dict('records')
