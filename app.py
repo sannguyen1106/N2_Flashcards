@@ -4,7 +4,7 @@ import os
 from gtts import gTTS
 import base64
 
-st.set_page_config(page_title="JP Flashcard N2 Pro", layout="centered")
+st.set_page_config(page_title="Flashcard", layout="centered")
 
 st.markdown("""
     <style>
